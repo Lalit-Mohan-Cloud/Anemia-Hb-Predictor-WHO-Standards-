@@ -1,6 +1,6 @@
 # 🛡️ Anemia (Hb) Predictor (WHO Standards)
 
-A **Streamlit-based application** that predicts Hemoglobin (Hb) levels from conjunctiva images using a **Hybrid CNN + Formulaic Model**.
+A **Streamlit-based application** that predicts Hemoglobin (Hb) levels from conjunctiva images using a **CNN + Formulaic Model**.
 The app applies **WHO Hemoglobin cut-offs** to classify anemia severity by demographic group.
 For **safety**, the final reported Hb is chosen as the **minimum of the CNN and Formula model outputs** to maximize sensitivity.
 
@@ -29,7 +29,7 @@ For **safety**, the final reported Hb is chosen as the **minimum of the CNN and 
 ```
 anemia-predictor/
 │── app.py                        # Main Streamlit app
-│── best_hybrid_model.keras       # Trained hybrid CNN model
+│── model.keras       # Trained CNN model
 │── requirements.txt              # Dependencies
 │── README.md                     # Project documentation
 ```
