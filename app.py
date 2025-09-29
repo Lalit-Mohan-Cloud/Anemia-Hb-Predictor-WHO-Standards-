@@ -6,7 +6,7 @@ import math
 from PIL import Image
 
 # --- Configuration ---
-MODEL_PATH = "model.keras" # NOTE: Using the hybrid model filename
+MODEL_PATH = "model.keras" # NOTE: Using the model filename
 INPUT_SIZE = (224, 224)
 
 # WHO Haemoglobin Cut-offs (converted from g/L to g/dL)
@@ -49,13 +49,13 @@ def predict_hb_formulaic(mean_r, mean_g, mean_b):
 
 # --- Model Loading (Cached for Efficiency) ---
 @st.cache_resource
-def load_hybrid_model():
-    """Loads the hybrid Keras model."""
+def load_model():
+    """Loads the Keras model."""
     try:
         model = tf.keras.models.load_model(MODEL_PATH, compile=False)
         return model
     except Exception as e:
-        st.error(f"Error loading model at {MODEL_PATH}. Make sure 'best_hybrid_model.keras' is in the current directory.")
+        st.error(f"Error loading model at {MODEL_PATH}. Make sure 'model.keras' is in the current directory.")
         return None
 
 # --- Image Preprocessing Function ---
@@ -87,7 +87,7 @@ def preprocess_image(uploaded_file):
         
         formula_hb_value_scalar = predict_hb_formulaic(mean_r, mean_g, mean_b)
         
-        # 3. Formula Input Tensor for Hybrid Model
+        # 3. Formula Input Tensor for Model
         input_tensor_formula = np.array([[formula_hb_value_scalar]]) 
         
         return input_tensor_cnn, input_tensor_formula, formula_hb_value_scalar, None
@@ -140,7 +140,7 @@ def main():
     This app uses a CNN model and a Formulaic Model, reports the **lowest** $\text{Hb}$ value for safety, and classifies the result based on your demographic using official WHO cut-offs.
     """)
 
-    model = load_hybrid_model()
+    model = load_model()
     if model is None:
         return # Stop execution if model loading failed
 
@@ -178,7 +178,7 @@ def main():
                     st.error(error)
                     return
 
-                # --- 1. Hybrid Model Prediction (CNN) ---
+                # --- 1. Model Prediction (CNN) ---
                 prediction_cnn = model.predict({
                     'image_input': input_tensor_cnn, 
                     'formula_input': input_tensor_formula
