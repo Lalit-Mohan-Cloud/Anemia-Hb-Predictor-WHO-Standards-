@@ -29,7 +29,7 @@ For **safety**, the final reported Hb is chosen as the **minimum of the CNN and 
 ```
 anemia-predictor/
 │── app.py                        # Main Streamlit app
-│── model.keras       # Trained CNN model
+│── model.keras                   # Trained CNN model
 │── requirements.txt              # Dependencies
 │── README.md                     # Project documentation
 ```
